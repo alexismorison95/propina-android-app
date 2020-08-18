@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var porcentajeText: TextView;
     private lateinit var consumicion: TextInputEditText;
     private lateinit var propina: TextView;
-    private lateinit var total: TextInputEditText;
+    private lateinit var total: TextView;
     private lateinit var propinaCheck: CheckBox;
     private lateinit var propinaLayout: LinearLayout
     private lateinit var comensalesCheck: CheckBox
@@ -206,7 +206,7 @@ class MainActivity : AppCompatActivity() {
                     propina.text = (round(propinaNumber * 100) / 100).toString()
                 }
 
-                total.setText(totalNumber.toString())
+                total.text = (round(totalNumber * 100) / 100).toString()
             }
             else {
 
@@ -235,7 +235,7 @@ class MainActivity : AppCompatActivity() {
 
                     comensalesTotal.text = (round(totalPorCNumber * 100) / 100).toString()
 
-                    total.setText(totalNumber.toString())
+                    total.text = (round(totalNumber * 100) / 100).toString()
                 }
                 else {
 
@@ -258,7 +258,7 @@ class MainActivity : AppCompatActivity() {
 
                         comensalesTotal.text = (round(totalPorCNumber * 100) / 100).toString()
 
-                        total.setText(totalNumber.toString())
+                        total.text = (round(totalNumber * 100) / 100).toString()
                     }
                     else {
 
@@ -273,7 +273,7 @@ class MainActivity : AppCompatActivity() {
                             totalNumber = ceil(consumicionNumber)
                         }
 
-                        total.setText(totalNumber.toString())
+                        total.text = (round(totalNumber * 100) / 100).toString()
                     }
                 }
             }
@@ -281,7 +281,9 @@ class MainActivity : AppCompatActivity() {
         else {
             propina.text = "0.0"
 
-            total.setText("0.0")
+            total.text = "0.0"
+
+            comensalesTotal.text = "0.0"
 
             propinaNumber = 0.0
 
