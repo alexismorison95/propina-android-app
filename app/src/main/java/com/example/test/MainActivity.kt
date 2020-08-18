@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.*
 import com.google.android.material.textfield.TextInputEditText
+import kotlin.math.ceil
 import kotlin.math.round
 
 class MainActivity : AppCompatActivity() {
@@ -15,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var seekBarP: SeekBar;
     private lateinit var porcentajeText: TextView;
     private lateinit var consumicion: TextInputEditText;
-    private lateinit var propina: TextInputEditText;
+    private lateinit var propina: TextView;
     private lateinit var total: TextInputEditText;
     private lateinit var propinaCheck: CheckBox;
     private lateinit var propinaLayout: LinearLayout
@@ -23,7 +24,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var comensalesLayout: LinearLayout
     private lateinit var seekBarC: SeekBar
     private lateinit var comensalesText: TextView
-    private lateinit var comensalesTotal: TextInputEditText
+    private lateinit var comensalesTotal: TextView
+    private lateinit var cambioCheck: CheckBox
 
     var minP = 10;
     var maxP = 100;
@@ -45,6 +47,7 @@ class MainActivity : AppCompatActivity() {
 
     var comensalesCantidad: Int = minC
 
+    var isCambio: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -137,6 +140,21 @@ class MainActivity : AppCompatActivity() {
                 hacerCuentas()
             }
         }
+
+        cambioCheck.setOnCheckedChangeListener { _, _ ->
+
+            if (cambioCheck.isChecked) {
+
+                isCambio = true
+
+                hacerCuentas()
+            }
+            else {
+                isCambio = false
+
+                hacerCuentas()
+            }
+        }
     }
 
     private fun setViews() {
@@ -153,6 +171,7 @@ class MainActivity : AppCompatActivity() {
         seekBarC = findViewById(R.id.seekBarComensales)
         comensalesText = findViewById(R.id.comensalesText)
         comensalesTotal = findViewById(R.id.inputComensalTotal)
+        cambioCheck = findViewById(R.id.cambioCheck)
     }
 
     private fun calcularPorcentaje(): Double {
@@ -174,9 +193,18 @@ class MainActivity : AppCompatActivity() {
 
                 propinaNumber = calcularPorcentaje()
 
-                propina.setText(propinaNumber.toString())
+                propina.text = propinaNumber.toString()
 
                 totalNumber = propinaNumber + consumicionNumber
+
+                if (isCambio) {
+
+                    totalNumber = ceil(totalNumber)
+
+                    propinaNumber = totalNumber - consumicionNumber
+
+                    propina.text = (round(propinaNumber * 100) / 100).toString()
+                }
 
                 total.setText(totalNumber.toString())
             }
@@ -188,15 +216,26 @@ class MainActivity : AppCompatActivity() {
 
                     propinaNumber = calcularPorcentaje()
 
-                    propina.setText(propinaNumber.toString())
+                    propina.text = propinaNumber.toString()
 
                     totalNumber = propinaNumber + consumicionNumber
 
-                    total.setText(totalNumber.toString())
-
                     totalPorCNumber = totalNumber / comensalesCantidad
 
-                    comensalesTotal.setText(totalPorCNumber.toString())
+                    if (isCambio) {
+
+                        totalPorCNumber = ceil(totalPorCNumber)
+
+                        totalNumber = totalPorCNumber * comensalesCantidad
+
+                        propinaNumber = totalNumber - consumicionNumber
+
+                        propina.text = (round(propinaNumber * 100) / 100).toString()
+                    }
+
+                    comensalesTotal.text = (round(totalPorCNumber * 100) / 100).toString()
+
+                    total.setText(totalNumber.toString())
                 }
                 else {
 
@@ -208,21 +247,39 @@ class MainActivity : AppCompatActivity() {
 
                         totalPorCNumber = consumicionNumber / comensalesCantidad
 
-                        comensalesTotal.setText(totalPorCNumber.toString())
+                        totalNumber = totalPorCNumber * comensalesCantidad
 
-                        total.setText(consumicion.text.toString())
+                        if (isCambio) {
+
+                            totalPorCNumber = ceil(totalPorCNumber)
+
+                            totalNumber = totalPorCNumber * comensalesCantidad
+                        }
+
+                        comensalesTotal.text = (round(totalPorCNumber * 100) / 100).toString()
+
+                        total.setText(totalNumber.toString())
                     }
                     else {
 
                         // Ninguno
 
-                        total.setText(consumicion.text.toString())
+                        consumicionNumber = consumicion.text.toString().toDouble()
+
+                        totalNumber = consumicionNumber
+
+                        if (isCambio) {
+
+                            totalNumber = ceil(consumicionNumber)
+                        }
+
+                        total.setText(totalNumber.toString())
                     }
                 }
             }
         }
         else {
-            propina.setText("0.0")
+            propina.text = "0.0"
 
             total.setText("0.0")
 

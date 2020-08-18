@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/colorFondo">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorFondo">
+        android:layout_above="@+id/bottomPanel">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,47 +47,111 @@
 
             </LinearLayout>
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="@color/colorGris"
+                android:layout_marginBottom="10dp"/>
+
+            <CheckBox
+                android:id="@+id/propinaCheck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Propina"/>
 
             <include layout="@layout/propina_layout"/>
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="@color/colorGris"
+                android:layout_marginTop="10dp"/>
+
+            <CheckBox
+                android:id="@+id/comensalesCheck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Comensales"
+                android:layout_marginTop="10dp"/>
 
             <include layout="@layout/comensal_layout"/>
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="@color/colorGris"
+                android:layout_marginVertical="10dp"/>
 
-            <LinearLayout
+            <CheckBox
+                android:id="@+id/cambioCheck"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="$ "
-                    android:textSize="25sp"/>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/inputTotal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Total a pagar"
-                        android:text="0.0"
-                        android:textSize="25sp"
-                        android:inputType="numberDecimal"
-                        android:clickable="false"
-                        android:cursorVisible="false"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"/>
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
+                android:text="Mejor cambio"
+                android:layout_marginTop="10dp"/>
 
         </LinearLayout>
 
     </ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/bottomPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total a pagar"
+            android:textSize="20sp"
+            android:textColor="@color/colorCard2"
+            android:layout_marginTop="10dp"
+            android:layout_centerInParent="true"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="-20dp"
+            android:layout_marginBottom="-25dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$"
+                android:textSize="30sp"
+                android:textColor="@color/colorCard1"
+                android:textStyle="bold"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputTotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint=""
+                    android:text="0.0"
+                    android:textColor="@color/colorCard1"
+                    android:textColorHint="@color/colorCard1"
+                    android:textSize="30sp"
+                    android:inputType="numberDecimal"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:theme="@style/BottomSection"
+                    android:textStyle="bold"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

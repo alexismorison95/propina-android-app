@@ -3,8 +3,9 @@
     <color name="colorPrimary">#424874</color>
     <color name="colorPrimaryDark">#424874</color>
     <color name="colorAccent">#424874</color>
-    <color name="colorGris">#ACACAC</color>
+    <color name="colorGris">#E1E1E1</color>
     <color name="colorFondo">#FFFFFF</color>
-    <color name="colorCard1">#dcd6f7</color>
+    <color name="colorCard1">#F9F6FF</color>
     <color name="colorCard2">#dcd6f7</color>
+    <color name="colorRojo">#f67280</color>
 </resources>
