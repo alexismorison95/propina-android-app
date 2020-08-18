@@ -8,7 +8,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:visibility="gone"
-    android:theme="@style/CardCustomP"
     android:layout_marginHorizontal="20dp">
 
     <TextView
@@ -18,7 +17,7 @@
         android:layout_gravity="center_horizontal"
         android:text="10%"
         android:textSize="20sp"
-        android:textColor="@color/colorRojo"/>
+        android:textColor="@color/colorPrimary"/>
 
     <SeekBar
         android:id="@+id/seekBarPorcentaje"

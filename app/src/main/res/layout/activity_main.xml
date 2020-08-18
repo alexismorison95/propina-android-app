@@ -16,14 +16,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -39,7 +40,7 @@
                         android:id="@+id/inputConsumicion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Total consumición"
+                        android:hint="Consumición"
                         android:textSize="20sp"
                         android:inputType="numberDecimal"
                         android:imeOptions="actionDone"/>
@@ -51,13 +52,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
                 android:background="@color/colorGris"
-                android:layout_marginBottom="18dp"/>
+                android:layout_marginBottom="18dp"
+                android:layout_marginHorizontal="20dp"/>
 
             <CheckBox
                 android:id="@+id/propinaCheck"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Propina"/>
+                android:text="Propina"
+                android:layout_marginHorizontal="20dp"/>
 
             <include layout="@layout/propina_layout"/>
 
@@ -65,14 +68,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
                 android:background="@color/colorGris"
-                android:layout_marginTop="18dp"/>
+                android:layout_marginTop="18dp"
+                android:layout_marginHorizontal="20dp"/>
 
             <CheckBox
                 android:id="@+id/comensalesCheck"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Comensales"
-                android:layout_marginTop="18dp"/>
+                android:layout_marginTop="18dp"
+                android:layout_marginHorizontal="20dp"/>
 
             <include layout="@layout/comensal_layout"/>
 
@@ -80,14 +85,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
                 android:background="@color/colorGris"
-                android:layout_marginTop="18dp"/>
+                android:layout_marginTop="18dp"
+                android:layout_marginHorizontal="20dp"/>
 
             <CheckBox
                 android:id="@+id/cambioCheck"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Mejor cambio"
-                android:layout_marginTop="18dp"/>
+                android:layout_marginTop="18dp"
+                android:layout_marginHorizontal="20dp"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="@color/colorGris"
+                android:layout_marginTop="18dp"
+                android:layout_marginHorizontal="20dp"/>
+
+            <Button
+                android:id="@+id/buttonShare"
+                android:theme="@style/ButtonShare"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:padding="25dp"
+                android:text="Compartir resumen"
+                android:layout_gravity="center_horizontal"
+                android:textSize="15sp"
+                android:textAllCaps="false"
+                android:drawableLeft="@drawable/ic_share"
+                android:drawableStart="@drawable/ic_share"
+                android:drawablePadding="20dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:paddingRight="27dp"
+                android:paddingEnd="27dp" />
 
         </LinearLayout>
 
