@@ -1,10 +1,13 @@
 package com.example.test
 
+import android.content.Intent
 import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import com.google.android.material.textfield.TextInputEditText
@@ -153,6 +156,41 @@ class MainActivity : AppCompatActivity() {
                 isCambio = false
 
                 hacerCuentas()
+            }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+
+        menuInflater.inflate(R.menu.menu, menu)
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        return when (item.itemId) {
+
+            R.id.recomendarApp -> {
+
+                var compartir = Intent(Intent.ACTION_SEND)
+
+                compartir.type = "text/plain"
+
+                val mensaje = "Te recomiendo Tips Calculadora, para calcular propinas y dividir la cuenta con tus amigos. http://play.google.com/store/apps/details?id=com.google.android.apps.maps"
+
+                compartir.putExtra(Intent.EXTRA_SUBJECT, "Tips Calculadora")
+
+                compartir.putExtra(Intent.EXTRA_TEXT, mensaje)
+
+                startActivity(Intent.createChooser(compartir, "Compartir vía"))
+
+                true
+            }
+            else -> {
+
+                true
             }
         }
     }
