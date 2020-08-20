@@ -114,34 +114,22 @@ class MainActivity : AppCompatActivity() {
 
         propinaCheck.setOnCheckedChangeListener { _, _ ->
 
-            if (propinaCheck.isChecked) {
+            isPropina = propinaCheck.isChecked
 
-                propinaLayout.visibility = View.VISIBLE
+            if (isPropina) { propinaLayout.visibility = View.VISIBLE }
 
-                isPropina = true
-            }
-            else {
-                propinaLayout.visibility = View.GONE
-
-                isPropina = false
-            }
+            else { propinaLayout.visibility = View.GONE }
 
             hacerCuentas()
         }
 
         comensalesCheck.setOnCheckedChangeListener { _, _ ->
 
-            if (comensalesCheck.isChecked) {
+            isComensales = comensalesCheck.isChecked
 
-                comensalesLayout.visibility = View.VISIBLE
+            if (isComensales) { comensalesLayout.visibility = View.VISIBLE }
 
-                isComensales = true
-            }
-            else {
-                comensalesLayout.visibility = View.GONE
-
-                isComensales = false
-            }
+            else { comensalesLayout.visibility = View.GONE }
 
             hacerCuentas()
         }
@@ -208,8 +196,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun calcularPorcentaje(): Double {
 
-        consumicionNumber = consumicion.text.toString().toDouble()
-
         propinaPorcNumber = (minP + (seekBarP.progress * stepP)).toDouble()
 
         return round((consumicionNumber * (propinaPorcNumber / 100.0)) * 100) / 100
@@ -219,29 +205,25 @@ class MainActivity : AppCompatActivity() {
 
         if (!consumicion.text.isNullOrBlank()) {
 
-            // Hay propina y no comensales
+            consumicionNumber = consumicion.text.toString().toDouble()
 
             if (isPropina && !isComensales) {
 
                 cuentaConPropinaSinComensales()
             }
             else {
-                // Hay propina y comensales
 
                 if (isPropina && isComensales) {
 
                     cuentaConPropinaConComensales()
                 }
                 else {
-                    // No hay propina pero si comensales
 
                     if (!isPropina && isComensales) {
 
                         cuentaSinPropinaConComensales()
                     }
                     else {
-                        // Ninguno
-
                         cuentaSinPropinaSinComensales()
                     }
                 }
@@ -269,8 +251,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun cuentaSinPropinaSinComensales() {
 
-        consumicionNumber = consumicion.text.toString().toDouble()
-
         totalNumber = consumicionNumber
 
         if (isCambio) {
@@ -282,8 +262,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun cuentaSinPropinaConComensales() {
-
-        consumicionNumber = consumicion.text.toString().toDouble()
 
         totalPorCNumber = consumicionNumber / comensalesCantidad
 
