@@ -16,6 +16,7 @@ import kotlin.math.round
 
 class MainActivity : AppCompatActivity() {
 
+    // Vistas
     private lateinit var seekBarP: SeekBar;
     private lateinit var porcentajeText: TextView;
     private lateinit var consumicion: TextInputEditText;
@@ -30,27 +31,29 @@ class MainActivity : AppCompatActivity() {
     private lateinit var comensalesTotal: TextView
     private lateinit var cambioCheck: CheckBox
 
+    // seekBarPropina
     var minP = 10;
     var maxP = 100;
     var stepP = 5;
 
+    // seekBarComensales
     var minC = 1;
     var maxC = 15;
     var stepC = 1;
 
+    // Variables internas para hacer cuentas
     var consumicionNumber: Double = 0.0
     var propinaPorcNumber: Double = 0.0
     var propinaNumber: Double = 0.0
     var totalNumber: Double = 0.0
-
-    var isPropina: Boolean = false
-    var isComensales: Boolean = false
-
     var totalPorCNumber: Double = 0.0
-
     var comensalesCantidad: Int = minC
 
+    // CheckBoxes
+    var isPropina: Boolean = false
+    var isComensales: Boolean = false
     var isCambio: Boolean = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +68,7 @@ class MainActivity : AppCompatActivity() {
 
         seekBarP.setOnSeekBarChangeListener(object :
         SeekBar.OnSeekBarChangeListener {
+
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
 
                 val progress = minP + (p1 * stepP)
@@ -81,6 +85,7 @@ class MainActivity : AppCompatActivity() {
 
         seekBarC.setOnSeekBarChangeListener(object :
         SeekBar.OnSeekBarChangeListener {
+
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
 
                 comensalesCantidad = minC + (p1 * stepC)
@@ -96,6 +101,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         consumicion.addTextChangedListener(object : TextWatcher {
+
             override fun afterTextChanged(p0: Editable?) { }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
@@ -113,16 +119,14 @@ class MainActivity : AppCompatActivity() {
                 propinaLayout.visibility = View.VISIBLE
 
                 isPropina = true
-
-                hacerCuentas()
             }
             else {
                 propinaLayout.visibility = View.GONE
 
                 isPropina = false
-
-                hacerCuentas()
             }
+
+            hacerCuentas()
         }
 
         comensalesCheck.setOnCheckedChangeListener { _, _ ->
@@ -132,31 +136,21 @@ class MainActivity : AppCompatActivity() {
                 comensalesLayout.visibility = View.VISIBLE
 
                 isComensales = true
-
-                hacerCuentas()
             }
             else {
                 comensalesLayout.visibility = View.GONE
 
                 isComensales = false
-
-                hacerCuentas()
             }
+
+            hacerCuentas()
         }
 
         cambioCheck.setOnCheckedChangeListener { _, _ ->
 
-            if (cambioCheck.isChecked) {
+            isCambio = cambioCheck.isChecked
 
-                isCambio = true
-
-                hacerCuentas()
-            }
-            else {
-                isCambio = false
-
-                hacerCuentas()
-            }
+            hacerCuentas()
         }
     }
 
@@ -174,7 +168,7 @@ class MainActivity : AppCompatActivity() {
 
             R.id.recomendarApp -> {
 
-                var compartir = Intent(Intent.ACTION_SEND)
+                val compartir = Intent(Intent.ACTION_SEND)
 
                 compartir.type = "text/plain"
 
@@ -229,105 +223,127 @@ class MainActivity : AppCompatActivity() {
 
             if (isPropina && !isComensales) {
 
-                propinaNumber = calcularPorcentaje()
-
-                propina.text = propinaNumber.toString()
-
-                totalNumber = propinaNumber + consumicionNumber
-
-                if (isCambio) {
-
-                    totalNumber = ceil(totalNumber)
-
-                    propinaNumber = totalNumber - consumicionNumber
-
-                    propina.text = (round(propinaNumber * 100) / 100).toString()
-                }
-
-                total.text = (round(totalNumber * 100) / 100).toString()
+                cuentaConPropinaSinComensales()
             }
             else {
-
                 // Hay propina y comensales
 
                 if (isPropina && isComensales) {
 
-                    propinaNumber = calcularPorcentaje()
-
-                    propina.text = propinaNumber.toString()
-
-                    totalNumber = propinaNumber + consumicionNumber
-
-                    totalPorCNumber = totalNumber / comensalesCantidad
-
-                    if (isCambio) {
-
-                        totalPorCNumber = ceil(totalPorCNumber)
-
-                        totalNumber = totalPorCNumber * comensalesCantidad
-
-                        propinaNumber = totalNumber - consumicionNumber
-
-                        propina.text = (round(propinaNumber * 100) / 100).toString()
-                    }
-
-                    comensalesTotal.text = (round(totalPorCNumber * 100) / 100).toString()
-
-                    total.text = (round(totalNumber * 100) / 100).toString()
+                    cuentaConPropinaConComensales()
                 }
                 else {
-
                     // No hay propina pero si comensales
 
-                    if (isComensales && !isPropina) {
+                    if (!isPropina && isComensales) {
 
-                        consumicionNumber = consumicion.text.toString().toDouble()
-
-                        totalPorCNumber = consumicionNumber / comensalesCantidad
-
-                        totalNumber = totalPorCNumber * comensalesCantidad
-
-                        if (isCambio) {
-
-                            totalPorCNumber = ceil(totalPorCNumber)
-
-                            totalNumber = totalPorCNumber * comensalesCantidad
-                        }
-
-                        comensalesTotal.text = (round(totalPorCNumber * 100) / 100).toString()
-
-                        total.text = (round(totalNumber * 100) / 100).toString()
+                        cuentaSinPropinaConComensales()
                     }
                     else {
-
                         // Ninguno
 
-                        consumicionNumber = consumicion.text.toString().toDouble()
-
-                        totalNumber = consumicionNumber
-
-                        if (isCambio) {
-
-                            totalNumber = ceil(consumicionNumber)
-                        }
-
-                        total.text = (round(totalNumber * 100) / 100).toString()
+                        cuentaSinPropinaSinComensales()
                     }
                 }
             }
         }
         else {
-            propina.text = "0.0"
-
-            total.text = "0.0"
-
-            comensalesTotal.text = "0.0"
-
-            propinaNumber = 0.0
-
-            consumicionNumber = 0.0
-
-            totalNumber = 0.0
+            resetValores()
         }
+    }
+
+    private fun resetValores() {
+
+        propina.text = "0.0"
+
+        total.text = "0.0"
+
+        comensalesTotal.text = "0.0"
+
+        propinaNumber = 0.0
+
+        consumicionNumber = 0.0
+
+        totalNumber = 0.0
+    }
+
+    private fun cuentaSinPropinaSinComensales() {
+
+        consumicionNumber = consumicion.text.toString().toDouble()
+
+        totalNumber = consumicionNumber
+
+        if (isCambio) {
+
+            totalNumber = ceil(consumicionNumber)
+        }
+
+        total.text = (round(totalNumber * 100) / 100).toString()
+    }
+
+    private fun cuentaSinPropinaConComensales() {
+
+        consumicionNumber = consumicion.text.toString().toDouble()
+
+        totalPorCNumber = consumicionNumber / comensalesCantidad
+
+        totalNumber = totalPorCNumber * comensalesCantidad
+
+        if (isCambio) {
+
+            totalPorCNumber = ceil(totalPorCNumber)
+
+            totalNumber = totalPorCNumber * comensalesCantidad
+        }
+
+        comensalesTotal.text = (round(totalPorCNumber * 100) / 100).toString()
+
+        total.text = (round(totalNumber * 100) / 100).toString()
+    }
+
+    private fun cuentaConPropinaConComensales() {
+
+        propinaNumber = calcularPorcentaje()
+
+        propina.text = propinaNumber.toString()
+
+        totalNumber = propinaNumber + consumicionNumber
+
+        totalPorCNumber = totalNumber / comensalesCantidad
+
+        if (isCambio) {
+
+            totalPorCNumber = ceil(totalPorCNumber)
+
+            totalNumber = totalPorCNumber * comensalesCantidad
+
+            propinaNumber = totalNumber - consumicionNumber
+
+            propina.text = (round(propinaNumber * 100) / 100).toString()
+        }
+
+        comensalesTotal.text = (round(totalPorCNumber * 100) / 100).toString()
+
+        total.text = (round(totalNumber * 100) / 100).toString()
+    }
+
+    private fun cuentaConPropinaSinComensales() {
+
+        propinaNumber = calcularPorcentaje()
+
+        propina.text = propinaNumber.toString()
+
+        totalNumber = propinaNumber + consumicionNumber
+
+        if (isCambio) {
+
+            totalNumber = ceil(totalNumber)
+
+            propinaNumber = totalNumber - consumicionNumber
+
+            propina.text = (round(propinaNumber * 100) / 100).toString()
+        }
+
+        total.text = (round(totalNumber * 100) / 100).toString()
     }
 }
