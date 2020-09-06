@@ -156,25 +156,30 @@ class MainActivity : AppCompatActivity() {
 
             R.id.recomendarApp -> {
 
-                val compartir = Intent(Intent.ACTION_SEND)
-
-                compartir.type = "text/plain"
-
-                val mensaje = "Te recomiendo Tips Calculadora, para calcular propinas y dividir la cuenta con tus amigos. http://play.google.com/store/apps/details?id=com.google.android.apps.maps"
-
-                compartir.putExtra(Intent.EXTRA_SUBJECT, "Tips Calculadora")
-
-                compartir.putExtra(Intent.EXTRA_TEXT, mensaje)
-
-                startActivity(Intent.createChooser(compartir, "Compartir vía"))
-
-                true
+                compartirApp()
             }
             else -> {
 
                 true
             }
         }
+    }
+
+    private fun compartirApp(): Boolean {
+
+        val compartir = Intent(Intent.ACTION_SEND)
+
+        compartir.type = "text/plain"
+
+        val mensaje = "Te recomiendo Tips Calculadora, para calcular propinas y dividir la cuenta con tus amigos. http://play.google.com/store/apps/details?id=com.google.android.apps.maps"
+
+        compartir.putExtra(Intent.EXTRA_SUBJECT, "Tips Calculadora")
+
+        compartir.putExtra(Intent.EXTRA_TEXT, mensaje)
+
+        startActivity(Intent.createChooser(compartir, "Compartir vía"))
+
+        return true
     }
 
     private fun setViews() {
