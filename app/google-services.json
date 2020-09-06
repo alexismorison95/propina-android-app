@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "94576558976",
+    "firebase_url": "https://tips-calculadora.firebaseio.com",
+    "project_id": "tips-calculadora",
+    "storage_bucket": "tips-calculadora.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:94576558976:android:dd9d92001415883ca17765",
+        "android_client_info": {
+          "package_name": "com.example.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "94576558976-t2hl6kld6uijavatu50vfkk8gvo9ghvb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.test",
+            "certificate_hash": "aabfb911c985d5d003e10f41b5b15633a6b9a919"
+          }
+        },
+        {
+          "client_id": "94576558976-ljhkusl50k1kqr3rb3jl4kvhfqmp09qv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2p7xWzHGkjJwVj1zfbdwDOpTDvl7fX38"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "94576558976-ljhkusl50k1kqr3rb3jl4kvhfqmp09qv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
