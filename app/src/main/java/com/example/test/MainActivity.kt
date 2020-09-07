@@ -1,18 +1,24 @@
 package com.example.test
 
 import android.content.Intent
-import android.opengl.Visibility
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
+import android.print.PrintAttributes
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
+import com.uttampanchasara.pdfgenerator.CreatePdf
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import kotlin.math.ceil
 import kotlin.math.round
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var comensalesText: TextView
     private lateinit var comensalesTotal: TextView
     private lateinit var cambioCheck: CheckBox
+    private lateinit var btnPdf: Button
 
     // seekBarPropina
     var minP = 10;
@@ -140,6 +147,11 @@ class MainActivity : AppCompatActivity() {
 
             hacerCuentas()
         }
+
+        btnPdf.setOnClickListener {
+
+            generarPDF()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -197,6 +209,7 @@ class MainActivity : AppCompatActivity() {
         comensalesText = findViewById(R.id.comensalesText)
         comensalesTotal = findViewById(R.id.inputComensalTotal)
         cambioCheck = findViewById(R.id.cambioCheck)
+        btnPdf = findViewById(R.id.btnPdf)
     }
 
     private fun calcularPorcentaje(): Double {
@@ -264,6 +277,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         total.text = (round(totalNumber * 100) / 100).toString()
+
+        totalPorCNumber = round(totalNumber * 100) / 100
     }
 
     private fun cuentaSinPropinaConComensales() {
@@ -328,5 +343,94 @@ class MainActivity : AppCompatActivity() {
         }
 
         total.text = (round(totalNumber * 100) / 100).toString()
+
+        totalPorCNumber = round(totalNumber * 100) / 100
+    }
+
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    private fun generarPDF() {
+
+        getExternalFilesDir("TipsCalculadora")?.absolutePath?.let {
+
+            val cont = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                "<p style=\"font-size:30px; text-align: center; font-weight: bold;\">TIPS CALCULADORA</p>\n" +
+
+                 "<p style=\"text-align: right; background: #dcd6f7; padding: 1%; padding-right: 2%\">" +
+                        "Fecha: ${getFecha()}<br>Hora: ${getHora()}</p>\n" +
+
+                    "<table style=\"width:100%\">" +
+
+                        "<tr><td><br></td></tr>" +
+                        "<tr style=\"text-align: center; font-size:20px;\">\n" +
+                        "   <td></td>" +
+                        "    <td style=\"text-align: right\">Consumicion:</td>\n" +
+                        "    <td style=\"text-align: right\">$ ${consumicion.text}</td>\n" +
+                        "</tr>" +
+
+                        "<tr><td><br></td></tr>" +
+                        "<tr style=\"text-align: center; font-size:20px;\">\n" +
+                        "   <td></td>" +
+                        "    <td style=\"text-align: right\">Propina: " +
+                        "       ${if (propinaCheck.isChecked) porcentajeText.text else "0%"}</td>\n" +
+                        "    <td style=\"text-align: right\">$ " +
+                        "       ${if (propinaCheck.isChecked) propina.text else "0.0"}</td>\n" +
+                        "</tr>" +
+
+                        "<tr><td><br></td></tr>" +
+
+                        "<tr style=\"text-align: center; font-size:20px;\">\n" +
+                        "    <td style=\"text-align: right\">Comensales: " +
+                        "       ${if (comensalesCheck.isChecked) comensalesCantidad else 1}</td>\n" +
+                        "    <td style=\"text-align: right\">Total por comensal:</td>\n" +
+                        "    <td style=\"text-align: right\">$ ${round(totalPorCNumber * 100) / 100}</td>\n" +
+                        "</tr>" +
+                        "<tr><td><br><br></td></tr>" +
+                        "</table>" +
+
+                "<p style=\"font-size:30px; text-align: center; background: #424874; padding: 1%; color: white\">" +
+                        "Total a pagar: $ ${total.text}</p>\n"
+            } else {
+                TODO("VERSION.SDK_INT < O")
+            }
+
+            CreatePdf(this)
+                .setPdfName("cuenta ${getFecha()} ${getHora()}")
+                .openPrintDialog(true)
+                .setContentBaseUrl(null)
+                .setPageSize(PrintAttributes.MediaSize.ISO_A4)
+                .setContent(cont)
+                .setFilePath(it)
+                .setCallbackListener(object : CreatePdf.PdfCallbackListener {
+
+                    override fun onFailure(errorMsg: String) {
+                        Toast.makeText(this@MainActivity, errorMsg, Toast.LENGTH_SHORT).show()
+                    }
+
+                    override fun onSuccess(filePath: String) {
+                        //Toast.makeText(this@MainActivity, "Pdf guardado en: $filePath", Toast.LENGTH_SHORT).show()
+                    }
+                })
+                .create()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getFecha(): String {
+
+        val current = LocalDateTime.now()
+
+        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+
+        return current.format(formatter)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getHora(): String {
+
+        val current = LocalDateTime.now()
+
+        val formatter = DateTimeFormatter.ofPattern("HH:mm:ss")
+
+        return current.format(formatter)
     }
 }

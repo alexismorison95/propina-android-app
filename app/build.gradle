@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.test"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -39,5 +39,5 @@ dependencies {
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.firebase:firebase-analytics:17.5.0'
-
+    implementation 'com.uttampanchasara.pdfgenerator:pdfgenerator:1.3'
 }

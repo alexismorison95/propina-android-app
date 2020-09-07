@@ -105,7 +105,7 @@
                 android:layout_marginHorizontal="20dp"/>
 
             <Button
-                android:id="@+id/buttonShare"
+                android:id="@+id/btnPdf"
                 android:theme="@style/ButtonShare"
                 android:layout_marginTop="18dp"
                 android:layout_marginBottom="18dp"
