@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Tips Calculadora</string>
+    <string name="recomendar_app">Recomendar App</string>
+    <string name="tips_guardadas">Tips guardadas</string>
+    <string name="acerca_de">Acerca de"</string>
+    <string name="consumicion">Consumición</string>
+    <string name="propina">Propina</string>
+    <string name="comensales">Comensales</string>
+    <string name="mejor_cambio">Mejor cambio</string>
+    <string name="compartir_tip">COMPARTIR RESUMEN</string>
+    <string name="total_a_pagar">Total a pagar</string>
+
+
+
 </resources>

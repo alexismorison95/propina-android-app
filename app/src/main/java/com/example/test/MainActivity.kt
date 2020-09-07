@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity() {
     var isCambio: Boolean = false
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -83,7 +84,7 @@ class MainActivity : AppCompatActivity() {
 
                 val progress = minP + (p1 * stepP)
 
-                porcentajeText.text = "$progress%"
+                porcentajeText.text = progress.toString()
 
                 hacerCuentas()
             }
@@ -100,7 +101,7 @@ class MainActivity : AppCompatActivity() {
 
                 comensalesCantidad = minC + (p1 * stepC)
 
-                comensalesText.text = "$comensalesCantidad"
+                comensalesText.text = comensalesCantidad.toString()
 
                 hacerCuentas()
             }
@@ -153,10 +154,10 @@ class MainActivity : AppCompatActivity() {
 
         btnPdf.setOnClickListener {
 
-            if (totalNumber > 0.0) generarPDF()
+            if (totalNumber > 0.0) { generarPDF() }
 
             else {
-                Toast.makeText(this@MainActivity, "Debe ingresar consumicion", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "Debe ingresar consumición", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -190,13 +191,11 @@ class MainActivity : AppCompatActivity() {
 
         compartir.type = "text/plain"
 
-        val mensaje = "Te recomiendo Tips Calculadora, para calcular propinas y dividir la cuenta con tus amigos. http://play.google.com/store/apps/details?id=com.google.android.apps.maps"
-
         compartir.putExtra(Intent.EXTRA_SUBJECT, "Tips Calculadora")
 
-        compartir.putExtra(Intent.EXTRA_TEXT, mensaje)
+        compartir.putExtra(Intent.EXTRA_TEXT, "Te recomiendo Tips Calculadora, para calcular propinas y dividir la cuenta con tus amigos. Podes descargar el APK desde el siguiente link https://github.com/alexismorison95/propina-android-app")
 
-        startActivity(Intent.createChooser(compartir, "Compartir vía"))
+        startActivity(Intent.createChooser(compartir, "Compartir"))
 
         return true
     }
@@ -224,68 +223,6 @@ class MainActivity : AppCompatActivity() {
         propinaPorcNumber = (minP + (seekBarP.progress * stepP)).toDouble()
 
         return round((consumicionNumber * (propinaPorcNumber / 100.0)) * 100) / 100
-    }
-
-    private fun hacerCuentas() {
-
-        if (!consumicion.text.isNullOrBlank()) {
-
-            consumicionNumber = consumicion.text.toString().toDouble()
-
-            if (isPropina && !isComensales) {
-
-                cuentaConPropinaSinComensales()
-            }
-            else {
-
-                if (isPropina && isComensales) {
-
-                    cuentaConPropinaConComensales()
-                }
-                else {
-
-                    if (!isPropina && isComensales) {
-
-                        cuentaSinPropinaConComensales()
-                    }
-                    else {
-                        cuentaSinPropinaSinComensales()
-                    }
-                }
-            }
-        }
-        else {
-            resetValores()
-        }
-    }
-
-    private fun resetValores() {
-
-        propina.text = "0.0"
-
-        total.text = "0.0"
-
-        comensalesTotal.text = "0.0"
-
-        propinaNumber = 0.0
-
-        consumicionNumber = 0.0
-
-        totalNumber = 0.0
-    }
-
-    private fun cuentaSinPropinaSinComensales() {
-
-        totalNumber = consumicionNumber
-
-        if (isCambio) {
-
-            totalNumber = ceil(consumicionNumber)
-        }
-
-        total.text = (round(totalNumber * 100) / 100).toString()
-
-        totalPorCNumber = round(totalNumber * 100) / 100
     }
 
     private fun cuentaSinPropinaConComensales() {
@@ -354,67 +291,122 @@ class MainActivity : AppCompatActivity() {
         totalPorCNumber = round(totalNumber * 100) / 100
     }
 
-    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    private fun cuentaSinPropinaSinComensales() {
+
+        totalNumber = consumicionNumber
+
+        if (isCambio) {
+
+            totalNumber = ceil(consumicionNumber)
+        }
+
+        total.text = (round(totalNumber * 100) / 100).toString()
+
+        totalPorCNumber = round(totalNumber * 100) / 100
+    }
+
+    private fun hacerCuentas() {
+
+        if (!consumicion.text.isNullOrBlank()) {
+
+            consumicionNumber = consumicion.text.toString().toDouble()
+
+            if (isPropina && !isComensales) {
+
+                cuentaConPropinaSinComensales()
+            }
+            else {
+
+                if (isPropina && isComensales) {
+
+                    cuentaConPropinaConComensales()
+                }
+                else {
+
+                    if (!isPropina && isComensales) {
+
+                        cuentaSinPropinaConComensales()
+                    }
+                    else {
+                        cuentaSinPropinaSinComensales()
+                    }
+                }
+            }
+        }
+        else {
+            resetValores()
+        }
+    }
+
+    private fun resetValores() {
+
+        propina.text = "0.0"
+        total.text = "0.0"
+        comensalesTotal.text = "0.0"
+        propinaNumber = 0.0
+        consumicionNumber = 0.0
+        totalNumber = 0.0
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun generarPDF() {
 
         getExternalFilesDir("TipsCalculadora")?.absolutePath?.let {
 
-            val cont = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                "<p style=\"font-size:30px; text-align: center; font-weight: bold;\">TIPS CALCULADORA</p>\n" +
+            val fecha = getFecha()
+
+            val content = "<p style=\"font-size:30px; text-align: center; font-weight: bold;\">TIPS CALCULADORA</p>\n" +
 
                  "<p style=\"text-align: right; background: #E1E1E1; padding: 1%; padding-right: 2%\">" +
-                        "Fecha: ${getFecha()} &nbsp;&nbsp; Hora: ${getHora()}</p>\n" +
+                        "Fecha: ${fecha[0]} &nbsp;&nbsp; Hora: ${fecha[1]}</p>\n" +
 
-                    "<table style=\"width:100%\">" +
+                "<table style=\"width:100%\">" +
+                    "<tr><td><br></td></tr>" +
+                    "<tr style=\"text-align: center; font-size:20px;\">\n" +
+                    "   <td></td>" +
+                    "    <td style=\"text-align: right\">Consumición:</td>\n" +
+                    "    <td style=\"text-align: right\">$ ${consumicion.text}</td>\n" +
+                    "</tr>" +
 
-                        "<tr><td><br></td></tr>" +
-                        "<tr style=\"text-align: center; font-size:20px;\">\n" +
-                        "   <td></td>" +
-                        "    <td style=\"text-align: right\">Consumicion:</td>\n" +
-                        "    <td style=\"text-align: right\">$ ${consumicion.text}</td>\n" +
-                        "</tr>" +
+                    "<tr><td><br></td></tr>" +
+                    "<tr style=\"text-align: center; font-size:20px;\">\n" +
+                    "   <td></td>" +
+                    "    <td style=\"text-align: right\">Propina " +
+                    "       ${if (propinaCheck.isChecked) porcentajeText.text else "0%"}</td>\n" +
+                    "    <td style=\"text-align: right\">$ " +
+                    "       ${if (propinaCheck.isChecked) propina.text else "0.0"}</td>\n" +
+                    "</tr>" +
+                    "<tr><td><br></td></tr>" +
+                 "</table>" +
 
-                        "<tr><td><br></td></tr>" +
-                        "<tr style=\"text-align: center; font-size:20px;\">\n" +
-                        "   <td></td>" +
-                        "    <td style=\"text-align: right\">Propina " +
-                        "       ${if (propinaCheck.isChecked) porcentajeText.text else "0%"}</td>\n" +
-                        "    <td style=\"text-align: right\">$ " +
-                        "       ${if (propinaCheck.isChecked) propina.text else "0.0"}</td>\n" +
-                        "</tr>" +
-                        "<tr><td><br></td></tr>" +
-                        "</table>" +
+                "<p style=\"text-align: center; background: #424874; padding: 1%; font-size:20px; color: white\">" +
+                "Comensales</p>\n" +
 
-                        "<p style=\"text-align: center; background: #424874; padding: 1%; font-size:20px; color: white\">" +
-                        "Comensales</p>\n" +
-
-                        "<table style=\"width:100%\">" +
-
-                        "<tr style=\"text-align: center; font-size:20px;\">\n" +
-                        "    <td style=\"text-align: right\">Cantidad: " +
-                        "       ${if (comensalesCheck.isChecked) comensalesCantidad else 1}</td>\n" +
-                        "    <td style=\"text-align: right\">Total por comensal:</td>\n" +
-                        "    <td style=\"text-align: right\">$ ${round(totalPorCNumber * 100) / 100}</td>\n" +
-                        "</tr>" +
-                        "<tr><td><br><br></td></tr>" +
-                        "</table>" +
+                "<table style=\"width:100%\">" +
+                    "<tr style=\"text-align: center; font-size:20px;\">\n" +
+                    "    <td style=\"text-align: right\">Cantidad: " +
+                    "       ${if (comensalesCheck.isChecked) comensalesCantidad else 1}</td>\n" +
+                    "    <td style=\"text-align: right\">Total por comensal:</td>\n" +
+                    "    <td style=\"text-align: right\">$ ${round(totalPorCNumber * 100) / 100}</td>\n" +
+                    "</tr>" +
+                    "<tr><td><br><br></td></tr>" +
+                "</table>" +
 
                 "<p style=\"font-size:30px; text-align: center; background: #424874; padding: 2%; color: white; font-weight: bold;\">" +
                         "Total a pagar: $ ${total.text}</p>\n"
-            } else {
-                TODO("VERSION.SDK_INT < O")
-            }
 
             CreatePdf(this)
-                .setPdfName("cuenta_${getFecha()}_${getHora()}")
+                .setPdfName("cuenta_${fecha[0]}_${fecha[1]}")
                 .openPrintDialog(false)
                 .setContentBaseUrl(null)
                 .setPageSize(PrintAttributes.MediaSize.ISO_A4)
-                .setContent(cont)
+                .setContent(content)
                 .setFilePath(it)
                 .setCallbackListener(object : CreatePdf.PdfCallbackListener {
 
                     override fun onFailure(errorMsg: String) {
+
                         Toast.makeText(this@MainActivity, errorMsg, Toast.LENGTH_SHORT).show()
                     }
 
@@ -423,11 +415,8 @@ class MainActivity : AppCompatActivity() {
                         try {
                             val f = File(filePath)
 
-                            val uri = FileProvider.getUriForFile(
-                                this@MainActivity,
-                                this@MainActivity.packageName.toString() + ".provider",
-                                f
-                            )
+                            val uri = FileProvider.getUriForFile(this@MainActivity,
+                                this@MainActivity.packageName.toString() + ".provider", f)
 
                             val share = Intent()
                             share.action = Intent.ACTION_SEND
@@ -442,28 +431,17 @@ class MainActivity : AppCompatActivity() {
                             Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_LONG).show()
                         }
                     }
-                })
-                .create()
+                }).create()
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun getFecha(): String {
-
+    private fun getFecha(): List<String> {
         val current = LocalDateTime.now()
 
-        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        val fecha = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        val hora = DateTimeFormatter.ofPattern("HH:mm:ss")
 
-        return current.format(formatter)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun getHora(): String {
-
-        val current = LocalDateTime.now()
-
-        val formatter = DateTimeFormatter.ofPattern("HH:mm:ss")
-
-        return current.format(formatter)
+        return listOf(current.format(fecha), current.format(hora))
     }
 }

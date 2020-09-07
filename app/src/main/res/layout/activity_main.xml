@@ -41,7 +41,7 @@
                         android:id="@+id/inputConsumicion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Consumición"
+                        android:hint="@string/consumicion"
                         android:textSize="20sp"
                         android:inputType="numberDecimal"
                         android:imeOptions="actionDone"/>
@@ -60,7 +60,7 @@
                 android:id="@+id/propinaCheck"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Propina"
+                android:text="@string/propina"
                 android:layout_marginHorizontal="20dp"/>
 
             <include layout="@layout/propina_layout"/>
@@ -76,7 +76,7 @@
                 android:id="@+id/comensalesCheck"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Comensales"
+                android:text="@string/comensales"
                 android:layout_marginTop="18dp"
                 android:layout_marginHorizontal="20dp"/>
 
@@ -93,7 +93,7 @@
                 android:id="@+id/cambioCheck"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mejor cambio"
+                android:text="@string/mejor_cambio"
                 android:layout_marginTop="18dp"
                 android:layout_marginHorizontal="20dp"/>
 
@@ -113,11 +113,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:padding="25dp"
-                android:text="COMPARTIR RESUMEN"
+                android:text="@string/compartir_tip"
                 android:layout_gravity="center_horizontal"
                 android:textSize="15sp"
                 android:textAllCaps="false"
-                android:drawableLeft="@drawable/ic_share"
                 android:drawableStart="@drawable/ic_share"
                 android:drawablePadding="20dp"
                 android:gravity="center_horizontal|center_vertical"/>
@@ -139,7 +138,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total a pagar"
+            android:text="@string/total_a_pagar"
             android:textSize="20sp"
             android:textColor="@color/colorCard2"/>
 

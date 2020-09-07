@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/recomendarApp"
-        android:title="Recomendar App"/>
+        android:title="@string/recomendar_app"/>
 
     <item
         android:id="@+id/misArchivos"
-        android:title="Cuentas guardadas"/>
+        android:title="@string/tips_guardadas"/>
 
     <item
         android:id="@+id/acercaDe"
-        android:title="Acerca de"/>
+        android:title="@string/acerca_de"/>
 </menu>
