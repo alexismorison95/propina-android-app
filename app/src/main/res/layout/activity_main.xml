@@ -113,16 +113,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:padding="25dp"
-                android:text="Compartir resumen"
+                android:text="COMPARTIR RESUMEN"
                 android:layout_gravity="center_horizontal"
                 android:textSize="15sp"
                 android:textAllCaps="false"
                 android:drawableLeft="@drawable/ic_share"
                 android:drawableStart="@drawable/ic_share"
                 android:drawablePadding="20dp"
-                android:gravity="center_horizontal|center_vertical"
-                android:paddingRight="27dp"
-                android:paddingEnd="27dp" />
+                android:gravity="center_horizontal|center_vertical"/>
 
         </LinearLayout>
 

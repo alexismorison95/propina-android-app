@@ -1,6 +1,7 @@
 package com.example.test
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.print.PrintAttributes
@@ -12,8 +13,10 @@ import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import com.google.android.material.textfield.TextInputEditText
 import com.uttampanchasara.pdfgenerator.CreatePdf
+import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.math.ceil
@@ -150,7 +153,11 @@ class MainActivity : AppCompatActivity() {
 
         btnPdf.setOnClickListener {
 
-            generarPDF()
+            if (totalNumber > 0.0) generarPDF()
+
+            else {
+                Toast.makeText(this@MainActivity, "Debe ingresar consumicion", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -355,8 +362,8 @@ class MainActivity : AppCompatActivity() {
             val cont = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 "<p style=\"font-size:30px; text-align: center; font-weight: bold;\">TIPS CALCULADORA</p>\n" +
 
-                 "<p style=\"text-align: right; background: #dcd6f7; padding: 1%; padding-right: 2%\">" +
-                        "Fecha: ${getFecha()}<br>Hora: ${getHora()}</p>\n" +
+                 "<p style=\"text-align: right; background: #E1E1E1; padding: 1%; padding-right: 2%\">" +
+                        "Fecha: ${getFecha()} &nbsp;&nbsp; Hora: ${getHora()}</p>\n" +
 
                     "<table style=\"width:100%\">" +
 
@@ -370,16 +377,21 @@ class MainActivity : AppCompatActivity() {
                         "<tr><td><br></td></tr>" +
                         "<tr style=\"text-align: center; font-size:20px;\">\n" +
                         "   <td></td>" +
-                        "    <td style=\"text-align: right\">Propina: " +
+                        "    <td style=\"text-align: right\">Propina " +
                         "       ${if (propinaCheck.isChecked) porcentajeText.text else "0%"}</td>\n" +
                         "    <td style=\"text-align: right\">$ " +
                         "       ${if (propinaCheck.isChecked) propina.text else "0.0"}</td>\n" +
                         "</tr>" +
-
                         "<tr><td><br></td></tr>" +
+                        "</table>" +
+
+                        "<p style=\"text-align: center; background: #424874; padding: 1%; font-size:20px; color: white\">" +
+                        "Comensales</p>\n" +
+
+                        "<table style=\"width:100%\">" +
 
                         "<tr style=\"text-align: center; font-size:20px;\">\n" +
-                        "    <td style=\"text-align: right\">Comensales: " +
+                        "    <td style=\"text-align: right\">Cantidad: " +
                         "       ${if (comensalesCheck.isChecked) comensalesCantidad else 1}</td>\n" +
                         "    <td style=\"text-align: right\">Total por comensal:</td>\n" +
                         "    <td style=\"text-align: right\">$ ${round(totalPorCNumber * 100) / 100}</td>\n" +
@@ -387,15 +399,15 @@ class MainActivity : AppCompatActivity() {
                         "<tr><td><br><br></td></tr>" +
                         "</table>" +
 
-                "<p style=\"font-size:30px; text-align: center; background: #424874; padding: 1%; color: white\">" +
+                "<p style=\"font-size:30px; text-align: center; background: #424874; padding: 2%; color: white; font-weight: bold;\">" +
                         "Total a pagar: $ ${total.text}</p>\n"
             } else {
                 TODO("VERSION.SDK_INT < O")
             }
 
             CreatePdf(this)
-                .setPdfName("cuenta ${getFecha()} ${getHora()}")
-                .openPrintDialog(true)
+                .setPdfName("cuenta_${getFecha()}_${getHora()}")
+                .openPrintDialog(false)
                 .setContentBaseUrl(null)
                 .setPageSize(PrintAttributes.MediaSize.ISO_A4)
                 .setContent(cont)
@@ -407,7 +419,28 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     override fun onSuccess(filePath: String) {
-                        //Toast.makeText(this@MainActivity, "Pdf guardado en: $filePath", Toast.LENGTH_SHORT).show()
+
+                        try {
+                            val f = File(filePath)
+
+                            val uri = FileProvider.getUriForFile(
+                                this@MainActivity,
+                                this@MainActivity.packageName.toString() + ".provider",
+                                f
+                            )
+
+                            val share = Intent()
+                            share.action = Intent.ACTION_SEND
+                            share.type = "application/pdf"
+                            share.putExtra(Intent.EXTRA_STREAM, uri)
+                            share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+                            startActivity(Intent.createChooser(share, "Compartir"))
+                        }
+                        catch (e: Exception) {
+
+                            Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_LONG).show()
+                        }
                     }
                 })
                 .create()

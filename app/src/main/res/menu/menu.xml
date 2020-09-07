@@ -5,6 +5,10 @@
         android:title="Recomendar App"/>
 
     <item
+        android:id="@+id/misArchivos"
+        android:title="Cuentas guardadas"/>
+
+    <item
         android:id="@+id/acercaDe"
         android:title="Acerca de"/>
 </menu>
