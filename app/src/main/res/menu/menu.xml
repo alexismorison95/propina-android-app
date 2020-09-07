@@ -5,10 +5,6 @@
         android:title="@string/recomendar_app"/>
 
     <item
-        android:id="@+id/misArchivos"
-        android:title="@string/tips_guardadas"/>
-
-    <item
         android:id="@+id/acercaDe"
         android:title="@string/acerca_de"/>
 </menu>

@@ -9,7 +9,9 @@ La App todavia no esta terminada, pero la voy actualizando.
     ./apks/tips-calculadora-v*.apk
 
 
-> Las capturas no estan actualizadas
+
 ## Capturas
 
 <img src="https://raw.githubusercontent.com/alexismorison95/propina-android-app/master/fotos/IMG-20200818-WA0032.jpg" width="250"> <img src="https://raw.githubusercontent.com/alexismorison95/propina-android-app/master/fotos/IMG-20200818-WA0033.jpg" width="250"> <img src="https://raw.githubusercontent.com/alexismorison95/propina-android-app/master/fotos/IMG-20200818-WA0034.jpg" width="250">
+
+> Las capturas no estan actualizadas

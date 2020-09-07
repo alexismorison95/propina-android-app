@@ -21,7 +21,8 @@
     <SeekBar
         android:id="@+id/seekBarPorcentaje"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:thumb="@drawable/ic_baseline_trip_origin_24"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
