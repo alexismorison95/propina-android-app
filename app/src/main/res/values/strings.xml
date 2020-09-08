@@ -9,7 +9,10 @@
     <string name="mejor_cambio">Mejor cambio</string>
     <string name="compartir_tip">COMPARTIR RESUMEN</string>
     <string name="total_a_pagar">Total a pagar</string>
-
+    <string name="acerca_de_1">Tips calculadora, para calcular propinas y dividir la cuenta con tus amigos</string>
+    <string name="acerca_de_2">Desarrollado por Alexis Morisón</string>
+    <string name="acerca_de_3">Codigo Fuente</string>
+    <string name="acerca_de_4">Contacto</string>
 
 
 </resources>

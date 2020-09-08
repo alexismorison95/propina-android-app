@@ -1,12 +1,12 @@
 # Tips Calculadora
 
-Aplicación en Kotlin para Android que sirve para calcular propinas y dividir la cuenta.
+### Aplicación en Kotlin para Android que sirve para calcular propinas y dividir la cuenta.
 
-La App todavia no esta terminada, pero la voy actualizando.
+    La App todavia no esta terminada, pero la voy actualizando.
 
-    El APK de la aplicación se encuentra en la carpeta:
-
-    ./apks/tips-calculadora-v*.apk
+> Descargar el APK mas reciente. Se encuentra en la carpeta ./apks/
+>
+> https://github.com/alexismorison95/propina-android-app/tree/master/apks
 
 
 

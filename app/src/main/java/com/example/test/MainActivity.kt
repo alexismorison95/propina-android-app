@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.print.PrintAttributes
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.style.ImageSpan
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -180,6 +181,9 @@ class MainActivity : AppCompatActivity() {
             }
             else -> {
 
+                val intent = Intent(this@MainActivity, Acerca::class.java)
+                startActivity(intent)
+
                 true
             }
         }
@@ -188,11 +192,8 @@ class MainActivity : AppCompatActivity() {
     private fun compartirApp(): Boolean {
 
         val compartir = Intent(Intent.ACTION_SEND)
-
         compartir.type = "text/plain"
-
         compartir.putExtra(Intent.EXTRA_SUBJECT, "Tips Calculadora")
-
         compartir.putExtra(Intent.EXTRA_TEXT, "Te recomiendo Tips Calculadora, para calcular propinas y dividir la cuenta con tus amigos. Podes descargar el APK desde el siguiente link https://github.com/alexismorison95/propina-android-app")
 
         startActivity(Intent.createChooser(compartir, "Compartir"))
