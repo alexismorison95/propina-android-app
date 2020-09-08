@@ -12,6 +12,4 @@
 
 ## Capturas
 
-<img src="https://raw.githubusercontent.com/alexismorison95/propina-android-app/master/fotos/IMG-20200818-WA0032.jpg" width="250"> <img src="https://raw.githubusercontent.com/alexismorison95/propina-android-app/master/fotos/IMG-20200818-WA0033.jpg" width="250"> <img src="https://raw.githubusercontent.com/alexismorison95/propina-android-app/master/fotos/IMG-20200818-WA0034.jpg" width="250">
-
-> Las capturas no estan actualizadas
+<img src="https://raw.githubusercontent.com/alexismorison95/propina-android-app/master/fotos/1.png" width="200"> <img src="https://raw.githubusercontent.com/alexismorison95/propina-android-app/master/fotos/2.png" width="200"> <img src="https://raw.githubusercontent.com/alexismorison95/propina-android-app/master/fotos/3.png" width="200"> <img src="https://raw.githubusercontent.com/alexismorison95/propina-android-app/master/fotos/4.png" width="200">
